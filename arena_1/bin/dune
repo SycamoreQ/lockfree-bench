@@ -1,0 +1,4 @@
+(executable
+ (public_name arena_1)
+ (name main)
+ (libraries arena_1))

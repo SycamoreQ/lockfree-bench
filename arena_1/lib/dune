@@ -1,0 +1,3 @@
+(library
+ (name arena_1)
+ (libraries mtime.clock.os))
