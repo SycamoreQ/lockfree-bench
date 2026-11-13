@@ -1,4 +1,3 @@
 (executable
- (public_name arena_1)
- (name main)
+ (name bench_counter)
  (libraries arena_1))
