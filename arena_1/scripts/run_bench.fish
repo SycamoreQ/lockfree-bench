@@ -17,11 +17,22 @@ set machine $argv[1]
 set note (string join ' ' $argv[2..-1])
 
 # 1. Toolchain check: refuse to run on the wrong compiler.
-set ver (ocamlfind ocamlopt -version)
-set fl (ocamlfind ocamlopt -config | string replace -rf '^flambda\s*:\s*' '')
+# Toolchain commands go through opam, so the repo's local switch is used no
+# matter what this shell's PATH or startup config says.
+if not test -f dune-project
+    echo "run from the arena_1 directory (the one containing dune-project)"
+    exit 1
+end
+if test -d _opam
+    set opamx opam exec --switch=. --
+else
+    set opamx
+end
+set ver ($opamx ocamlfind ocamlopt -version)
+set fl ($opamx ocamlfind ocamlopt -config | string replace -rf '^flambda\s*:\s*' '')
 if test "$ver" != "$expected_ocaml"
     echo "wrong compiler: $ver (expected $expected_ocaml)"
-    echo "hint: run 'eval (opam env)' in this shell"
+    echo "hint: is the local switch created? check 'opam switch list'"
     exit 1
 end
 if test "$fl" != "$expected_flambda"
@@ -36,7 +47,7 @@ if string match -q '*-dirty' -- $desc
 end
 
 # 3. Build.
-dune build --profile release ./bin/bench_counter.exe; or exit 1
+$opamx dune build --profile release ./bin/bench_counter.exe; or exit 1
 set exe ./_build/default/bin/bench_counter.exe
 
 # 4. Run, with platform-specific wrapping.
