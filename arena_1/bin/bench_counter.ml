@@ -18,8 +18,8 @@ let domain_counts = [ 1; 2; 3; 4 ]
 
 (* Private work between operations, in nanoseconds (converted to loop
    iterations via the calibration below). 0 = back-to-back operations. *)
-let work_ns_list = [ 0; 200; 5000 ]
-let rep_runs = 3
+let work_ns_list = [ 0; 50; 200; 1000; 5000 ]
+let rep_runs = 7
 
 let shuffle_seed = 42
 
