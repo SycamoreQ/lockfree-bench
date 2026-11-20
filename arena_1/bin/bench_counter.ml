@@ -19,7 +19,13 @@ let domain_counts = [ 1; 2; 3; 4 ]
 (* Private work between operations, in nanoseconds (converted to loop
    iterations via the calibration below). 0 = back-to-back operations. *)
 let work_ns_list = [ 0; 50; 200; 1000; 5000 ]
-let rep_runs = Sys.getenv "REP_RUNS"
+let rep_runs =
+  match Sys.getenv_opt "REP_RUNS" with
+  | None -> 7
+  | Some s -> (
+      match int_of_string_opt s with
+      | Some n when n >= 1 -> n
+      | _ -> failwith ("REP_RUNS must be a positive integer, got: " ^ s))
 
 let shuffle_seed = 42
 
