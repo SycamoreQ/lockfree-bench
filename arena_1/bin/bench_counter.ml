@@ -19,7 +19,7 @@ let domain_counts = [ 1; 2; 3; 4 ]
 (* Private work between operations, in nanoseconds (converted to loop
    iterations via the calibration below). 0 = back-to-back operations. *)
 let work_ns_list = [ 0; 50; 200; 1000; 5000 ]
-let rep_runs = 7
+let rep_runs = Sys.getenv "REP_RUNS"
 
 let shuffle_seed = 42
 
