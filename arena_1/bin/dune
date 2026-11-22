@@ -1,3 +1,7 @@
 (executable
  (name bench_counter)
  (libraries arena_1))
+
+(executable
+  (name fastpath_check)
+  (libraries arena_1))
